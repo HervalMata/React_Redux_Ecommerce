@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Home from "./pages/Home";
@@ -8,7 +8,7 @@ import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import RegisterComplete from "./pages/auth/RegisterComplete";
 import { useDispatch } from "react-redux";
-import {auth} from "firebase";
+import {auth} from "./firebase";
 
 const App = () => {
     const dispatch = useDispatch();
