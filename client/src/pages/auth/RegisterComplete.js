@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {auth} from "../../firebase";
 import {toast, ToastContainer} from "react-toastify";
 
-const RegisterComplete = () => {
+const RegisterComplete = ({history}) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -11,12 +11,36 @@ const RegisterComplete = () => {
     }, []);
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!email || !password) {
+            toast.error("Email e senha são requeridos");
+            return ;
+        }
+        if (password.length < 6) {
+            toast.error("Senha deve ter pelo menos 6 caracteres");
+            return ;
+        }
+        try {
+            const result = await auth.signInWithEmailLink(
+                email, window.location.href
+            );
+            if (result.user.emailVerified) {
+                window.localStorage.removeItem("emailForRegistration");
+                let user = auth.currentUser;
+                await user.updatePassword(password);
+                const idTokenResult = await user.getIdTokenResult();
+                console.log("usuário", user, "idTokenResult", idTokenResult);
+                history.push("/");
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message);
+        }
     };
 
     const completeRegisterForm = () => (
         <form onSubmit={handleSubmit}>
             <input type="email" className="form-control" value={email}
-                   onChange={(e) => setEmail(e.target.value)} autoFocus/>
+                   onChange={(e) => setEmail(e.target.value)} disabled />
             <input type="password" className="form-control" value={password}
                    onChange={(e) => setPassword(e.target.value)} placeholder="Senha" autoFocus/>
             <button type="submit" className="btn btn-raised">

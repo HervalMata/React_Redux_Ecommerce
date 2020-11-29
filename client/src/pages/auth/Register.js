@@ -33,7 +33,6 @@ const Register = () => {
             <div className="row">
                 <div className="col-md-6 offset-md-3">
                     <h4>Cadastrar</h4>
-                    <ToastContainer />
                     {registerForm()}
                 </div>
             </div>
