@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {toast} from "react-toastify";
 import {auth, googleAuthProvider} from "../../firebase";
 import {GoogleOutlined, MailOutlined} from "@ant-design/icons";
 import {Button} from "antd";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {Link} from "react-router-dom";
 
 const Login = ({history}) => {
@@ -13,6 +13,12 @@ const Login = ({history}) => {
     const [loading, setLoading] = useState(false);
 
     let dispatch = useDispatch();
+
+    const { user } = useSelector((state) => ({ ...state }));
+
+    useEffect(() => {
+        if (user && user.token) history.push("/");
+    }, [user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -75,9 +81,7 @@ const Login = ({history}) => {
                 disabled={!email || !password.length < 6}>
                 Login com Email/Senha
             </Button>
-            <Link to="/forgot/password" className="float-right text-danger">
-                Esqueceu sua senha?
-            </Link>
+
             <br/>
         </form>
     );
@@ -94,6 +98,9 @@ const Login = ({history}) => {
                         icon={<GoogleOutlined />} size="large">
                         Login com Google
                     </Button>
+                    <Link to="/forgot/password" className="float-right text-danger">
+                        Esqueceu sua senha?
+                    </Link>
                 </div>
             </div>
         </div>
