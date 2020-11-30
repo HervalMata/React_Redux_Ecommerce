@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
 
+const authRoutes = require("./routes/auth");
+
 const app = express();
 
 mongoose.connect(process.env.BATABASE, {
@@ -17,11 +19,7 @@ app.use(morgan("dev"));
 app.use(bodyParser.json({ limit: "2mb" }));
 app.use(cors());
 
-app.get("/api", (req, res) => {
-    res.json({
-        data: "hey you hit node API",
-    });
-});
+app.use("/api", authRoutes);
 
 const port = process.env.PORT || 8000;
 
