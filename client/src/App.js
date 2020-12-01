@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Home from "./pages/Home";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route } from 'react-router-dom';
 import Header from "./components/nav/Header";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,6 +11,8 @@ import { useDispatch } from "react-redux";
 import {auth} from "./firebase";
 import {currentUser} from "./functions/auth";
 import ForgotPassword from "./pages/auth/ForgotPassword";
+import History from "./pages/user/History";
+import UserRoute from "./components/routes/UserRoutes";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -48,6 +50,7 @@ const App = () => {
                 <Route exact path="/register" component={Register}/>
                 <Route exact path="/register/complete" component={RegisterComplete}/>
                 <Route exact path="/forgot/password" component={ForgotPassword}/>
+                <UserRoute exact path="/user/history" component={History}/>
             </Switch>
         </>
     );
