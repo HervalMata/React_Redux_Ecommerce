@@ -15,6 +15,8 @@ import History from "./pages/user/History";
 import UserRoute from "./components/routes/UserRoutes";
 import Password from "./pages/user/Password";
 import Wishlist from "./pages/user/Wishlist";
+import AdminRoute from "./components/routes/AdminRoute";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -55,6 +57,7 @@ const App = () => {
                 <UserRoute exact path="/user/history" component={History}/>
                 <UserRoute exact path="/user/password" component={Password}/>
                 <UserRoute exact path="/user/wishlist" component={Wishlist}/>
+                <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
             </Switch>
         </>
     );
