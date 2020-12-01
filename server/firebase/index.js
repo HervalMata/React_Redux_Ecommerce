@@ -6,3 +6,5 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://react-redux-ecommerce-58101.firebaseio.com"
 });
+
+module.exports = admin;
