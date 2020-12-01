@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import RegisterComplete from "./pages/auth/RegisterComplete";
 import { useDispatch } from "react-redux";
 import {auth} from "./firebase";
+import {currentUser} from "./functions/auth";
+import ForgotPassword from "./pages/auth/ForgotPassword";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -17,13 +19,20 @@ const App = () => {
             if (user) {
                 const idTokenResult = await user.getIdTokenResult();
                 console.log("user", user);
-                dispatch({
-                    type: "LOGGED_IN_USER",
-                    payload: {
-                        email: user.email,
-                        token: idTokenResult.token,
-                    },
-                });
+                currentUser(idTokenResult.token)
+                    .then((res) => {
+                        dispatch({
+                            type: "LOGGED_IN_USER",
+                            payload: {
+                                name: res.data.name,
+                                email: res.data.email,
+                                token: idTokenResult.token,
+                                role: res.data.role,
+                                _id: res.data._id,
+                            },
+                        });
+                    })
+                    .catch((err) => console.log(err));
             }
         });
         return () => unsubscribe();
@@ -38,6 +47,7 @@ const App = () => {
                 <Route exact path="/login" component={Login}/>
                 <Route exact path="/register" component={Register}/>
                 <Route exact path="/register/complete" component={RegisterComplete}/>
+                <Route exact path="/forgot/password" component={ForgotPassword}/>
             </Switch>
         </>
     );
