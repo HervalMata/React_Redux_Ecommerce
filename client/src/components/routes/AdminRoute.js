@@ -1,7 +1,8 @@
 import {useSelector} from "react-redux";
-import {useState} from "react";
+import React, {useEffect, useState} from "react";
 import LoadingToRedirect from "./LoadingToRedirect";
-import Route from "react-router-dom";
+import { Route } from "react-router-dom";
+import {currentAdmin} from "../../functions/auth";
 
 const AdminRoute = ({ children, ...rest }) => {
     const {user} = useSelector((state) => ({ ...state }));
@@ -18,7 +19,7 @@ const AdminRoute = ({ children, ...rest }) => {
                     setOk(false);
                 });
         }
-    }, [true]);
+    }, [user]);
     return ok ? <Route {...rest} /> : <LoadingToRedirect />;
 };
 

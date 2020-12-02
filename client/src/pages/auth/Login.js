@@ -19,7 +19,7 @@ const Login = ({history}) => {
 
     useEffect(() => {
         if (user && user.token) history.push("/");
-    }, [user]);
+    }, [user, history]);
     
     const roleBasedRedirect = (res) => {
         if (res.data.role === "admin") {
@@ -61,8 +61,8 @@ const Login = ({history}) => {
     };
 
     const googleLogin = async () => {
-        auth.
-            signInWithPopup(googleAuthProvider)
+        auth
+            .signInWithPopup(googleAuthProvider)
             .then(async (result) => {
                 const { user } = result;
                 const idTokenResult = await user.getIdTokenResult();

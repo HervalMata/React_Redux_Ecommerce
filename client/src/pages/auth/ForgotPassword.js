@@ -15,8 +15,8 @@ const ForgotPassword = ({ history }) => {
             handleCodeInApp: true,
         };
 
-        await auth.
-            sendPasswordResetEmail(email, config)
+        await auth
+            .sendPasswordResetEmail(email, config)
                 .then( (t) => {
                     setEmail("");
                     setLoading(false);
