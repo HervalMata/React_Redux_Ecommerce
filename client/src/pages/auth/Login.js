@@ -103,7 +103,7 @@ const Login = ({history}) => {
                 onClick={handleSubmit} type="primary"
                 className="mb-3" block shape="round"
                 icon={<MailOutlined />} size="large"
-                disabled={!email || !password.length < 6}>
+                disabled={!email || !password.length > 6}>
                 Login com Email/Senha
             </Button>
 
