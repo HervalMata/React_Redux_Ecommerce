@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import AdminNav from "../../../components/nav/AdminNav";
 import {useSelector} from "react-redux";
-import {createCategory, getCategories} from "../../../functions/category";
+import {createCategory, getCategories, removeCategory} from "../../../functions/category";
 import {toast} from "react-toastify";
+import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import {Link} from "react-router-dom";
 
 const CategoryCreate = () => {
     const { user } = useSelector((state) => ({ ...state }));
@@ -12,7 +14,7 @@ const CategoryCreate = () => {
 
     useEffect(() => {
         loadCategories();
-    });
+    }, []);
 
     const loadCategories = () =>
         getCategories().then((c) => setCategories(c.data));
@@ -25,12 +27,33 @@ const CategoryCreate = () => {
                 setLoading(false);
                 setName("");
                 toast.success(`"${res.data.name}" está criado`);
+                loadCategories();
             })
             .catch((err) => {
                 console.log(err);
                 setLoading(false);
                 if (err.response.status === 400) toast.error(err.response.data);
             });
+    };
+
+    const handleRemove = async (slug) => {
+        if (window.confirm("Remover?")){
+            setLoading(true);
+            removeCategory(slug, user.token)
+                .then((res) => {
+                    setLoading(false);
+                    setName("");
+                    toast.success(`"${res.data.name}" removido`);
+                    loadCategories();
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setLoading(false);
+                    if (err.response.status === 400) toast.error(err.response.data);
+                });
+        }
+
+
     };
 
     const categoryForm = () => (
@@ -62,7 +85,21 @@ const CategoryCreate = () => {
                     )}
                     {categoryForm()}
                     <hr />
-                    {JSON.stringify(categories)}
+                    {categories.map((c) => (
+                        <div className="alert alert-secondary" key={c._id}>
+                            {c.name}
+                            <span
+                                onClick={() => handleRemove(c.slug)}
+                                className="btn btn-sm float-right">
+                                <DeleteOutlined className="text-danger" />
+                            </span>
+                            <Link to={`/admin/category/${c.slug}`}>
+                                <span className="btn btn-sm float-right">
+                                    <EditOutlined className="text-warning" />
+                                </span>
+                            </Link>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
