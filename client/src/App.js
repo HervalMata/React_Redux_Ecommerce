@@ -19,6 +19,7 @@ import AdminRoute from "./components/routes/AdminRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import CategoryCreate from "./pages/admin/category/CategoryCreate";
 import CategoryUpdate from "./pages/admin/category/CategoryUpdate";
+import ProductCreate from "./pages/admin/product/ProductCreate";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -62,6 +63,7 @@ const App = () => {
                 <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
                 <AdminRoute exact path="/admin/category" component={CategoryCreate} />
                 <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
+                <AdminRoute exact path="/admin/product" component={ProductCreate} />
             </Switch>
         </>
     );
