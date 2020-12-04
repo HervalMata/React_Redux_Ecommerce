@@ -6,6 +6,7 @@ import {toast} from "react-toastify";
 import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
 import CategoryForm from "../../../components/forms/CategoryForm";
+import LocalSearch from "../../../components/forms/LocalSearch";
 
 const CategoryCreate = () => {
     const { user } = useSelector((state) => ({ ...state }));
@@ -79,13 +80,7 @@ const CategoryCreate = () => {
                         handleSubmit={handleSubmit()}
                         name={name} setName={setName}
                     />
-                    <input
-                        type="search"
-                        placeholder="filter"
-                        value={keyword}
-                        onChange={handleSearchChange}
-                        className="form-control mb-4"
-                    />
+                    <LocalSearch keyword={keyword} setKeyword={setKeyword} />
                     <hr />
                     {categories.filter(searched(keyword)).map((c) => (
                         <div className="alert alert-secondary" key={c._id}>
