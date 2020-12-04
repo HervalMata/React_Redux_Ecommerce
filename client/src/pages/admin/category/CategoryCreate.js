@@ -57,11 +57,6 @@ const CategoryCreate = () => {
         }
     };
 
-    const handleSearchChange = (e) => {
-        e.preventDefault();
-        setKeyword(e.target.value.toLowerCase());
-    };
-
     const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
 
     return (
@@ -77,7 +72,7 @@ const CategoryCreate = () => {
                         <h4>Cadastrar Categoria</h4>
                     )}
                     <CategoryForm
-                        handleSubmit={handleSubmit()}
+                        handleSubmit={handleSubmit}
                         name={name} setName={setName}
                     />
                     <LocalSearch keyword={keyword} setKeyword={setKeyword} />

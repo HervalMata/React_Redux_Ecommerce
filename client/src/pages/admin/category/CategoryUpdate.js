@@ -47,7 +47,7 @@ const CategoryUpdate = ({ history, match }) => {
                         <h4>Atualizar Categoria</h4>
                     )}
                     <CategoryForm
-                        handleSubmit={handleSubmit()}
+                        handleSubmit={handleSubmit}
                         name={name} setName={setName}
                     />
                     <hr />
