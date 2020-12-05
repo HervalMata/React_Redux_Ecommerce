@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 import AdminNav from "../../../components/nav/AdminNav";
+import {useSelector} from "react-redux";
+import {createProduct} from "../../../functions/product";
+import {toast} from "react-toastify";
 
 const initialState = {
     title: "",
@@ -17,6 +20,8 @@ const initialState = {
 const ProductCreate = () => {
     const [values, setValues] = useState(initialState);
 
+    const { user } = useSelector((state) => ({ ...state }));
+
     const {
         title, description, price, categories, category,
         shipping, quantity, images, colors, color
@@ -24,10 +29,16 @@ const ProductCreate = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        createProduct(values, user.token).then((res) => {
+            console.log(res);
+        }).catch((err) => {
+            console.log(err);
+            if (err.response.status === 400) toast.error(err.response.data);
+        });
     };
 
     const handleChange = (e) => {
-        e.preventDefault();
+        setValues({ ...values, [e.target.name]: e.target.value });
     };
 
     return (
@@ -97,6 +108,7 @@ const ProductCreate = () => {
                                 ))}
                             </select>
                         </div>
+                        <button className="btn btn-outline-info">Salvar</button>
                     </form>
                 </div>
             </div>
