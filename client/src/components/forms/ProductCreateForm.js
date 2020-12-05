@@ -57,11 +57,24 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values }) => {
                 <select
                     name="color"
                     className="form-control"
-                    value={title} onChange={handleChange}
+                    onChange={handleChange}
                 >
                     <option>Por favor selecione</option>
                     {colors.map((c) => (
                         <option key={c} value={c}>{c}</option>
+                    ))}
+                </select>
+            </div>
+            <div className="form-group">
+                <label>Categoria</label>
+                <select
+                    name="category"
+                    className="form-control"
+                    onChange={handleChange}
+                >
+                    <option>Por favor selecione</option>
+                    {categories.length > 0 && categories.map((c) => (
+                        <option key={c._id} value={c._id}>{c.name}</option>
                     ))}
                 </select>
             </div>
