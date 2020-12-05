@@ -5,6 +5,7 @@ import {createProduct} from "../../../functions/product";
 import {toast} from "react-toastify";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import {getCategories} from "../../../functions/category";
+import FileUpload from "../../../components/forms/FileUpload";
 
 const initialState = {
     title: "",
@@ -63,6 +64,11 @@ const ProductCreate = () => {
                 <div className="col-md-10">
                     Cadastro de Produto
                     <hr />
+
+                    <div className="p-3">
+                        <FileUpload />
+                    </div>
+
                     <ProductCreateForm
                         handleSubmit={handleSubmit}
                         handleChange={handleChange}
