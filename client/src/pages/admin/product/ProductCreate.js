@@ -22,7 +22,7 @@ const initialState = {
 
 const ProductCreate = () => {
     const [values, setValues] = useState(initialState);
-
+    const [loading, setLoading] = useState(false);
     const { user } = useSelector((state) => ({ ...state }));
 
     useEffect(() => {
@@ -66,7 +66,11 @@ const ProductCreate = () => {
                     <hr />
 
                     <div className="p-3">
-                        <FileUpload />
+                        <FileUpload
+                            values={values}
+                            setValues={setValues}
+                            setLoading={setLoading}
+                        />
                     </div>
 
                     <ProductCreateForm
