@@ -31,6 +31,8 @@ const ProductCreate = () => {
         e.preventDefault();
         createProduct(values, user.token).then((res) => {
             console.log(res);
+            window.alert(`"${res.data.title}" está criado`);
+            window.location.reload();
         }).catch((err) => {
             console.log(err);
             if (err.response.status === 400) toast.error(err.response.data);
