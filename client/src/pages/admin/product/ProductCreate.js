@@ -48,6 +48,12 @@ const ProductCreate = () => {
         setValues({ ...values, [e.target.name]: e.target.value });
     };
 
+    const handleCategoryChange = (e) => {
+        e.preventDefault();
+        console.log("CATEGORIA CLICADA", e.target.value);
+        setValues({ ...values, category: e.target.value });
+    };
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -60,6 +66,8 @@ const ProductCreate = () => {
                     <ProductCreateForm
                         handleSubmit={handleSubmit}
                         handleChange={handleChange}
+                        handleCategoryChange={handleCategoryChange}
+                        setValues={setValues}
                         values={values}
                     />
                 </div>
