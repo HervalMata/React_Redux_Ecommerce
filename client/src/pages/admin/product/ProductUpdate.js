@@ -3,6 +3,7 @@ import {useSelector} from "react-redux";
 import AdminNav from "../../../components/nav/AdminNav";
 import {getProduct} from "../../../functions/product";
 import ProductUpdateForm from "../../../components/forms/ProductUpdateForm";
+import {getCategories} from "../../../functions/category";
 
 
 const initialState = {
@@ -20,11 +21,13 @@ const initialState = {
 
 const ProductUpdate = ({ match }) => {
     const [values, setValues] = useState(initialState);
+    const [categories, setCategories] = useState([]);
     const { user } = useSelector((state) => ({ ...state }));
     const { slug } = match.params;
 
     useEffect(() => {
         loadProduct();
+        loadCategories();
     }, []);
 
     const loadProduct = () => {
@@ -33,12 +36,23 @@ const ProductUpdate = ({ match }) => {
         });
     };
 
+    const loadCategories = () =>
+        getCategories().then((c) => {
+            setCategories(c.data);
+        });
+
     const handleSubmit = (e) => {
         e.preventDefault();
     };
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value });
+    };
+
+    const handleCategoryChange = (e) => {
+        e.preventDefault();
+        console.log("CATEGORIA CLICADA", e.target.value);
+        setValues({ ...values, category: e.target.value });
     };
 
     return (
@@ -53,6 +67,9 @@ const ProductUpdate = ({ match }) => {
                     <ProductUpdateForm
                         handleSubmit={handleSubmit}
                         handleChange={handleChange}
+                        handleCategoryChange={handleCategoryChange}
+                        categories={categories}
+                        values={setValues}
                         setValues={setValues} />
                     <hr />
                 </div>

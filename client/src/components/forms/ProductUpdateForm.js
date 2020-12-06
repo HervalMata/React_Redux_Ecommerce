@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProductUpdateForm = ({ handleSubmit, handleChange, setValues, values }) => {
+const ProductUpdateForm = ({ handleSubmit, handleChange, handleCategoryChange, setValues, values, categories }) => {
     const {
         title, description, price, categories, category,
         shipping, quantity, images, colors, color
@@ -71,7 +71,7 @@ const ProductUpdateForm = ({ handleSubmit, handleChange, setValues, values }) =>
                 <select
                     name="category"
                     className="form-control"
-                    onChange={handleChange}
+                    onChange={handleCategoryChange}
                 >
                     <option>Por favor selecione</option>
                     {categories.length > 0 && categories.map((c) => (
