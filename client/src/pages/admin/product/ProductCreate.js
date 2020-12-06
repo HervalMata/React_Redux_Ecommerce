@@ -18,7 +18,7 @@ const initialState = {
     images: [],
     colors: ["Brown", "Red", "Blue", "Green", "White", "Pink", "Yellow"],
     color: "",
-}
+};
 
 const ProductCreate = () => {
     const [values, setValues] = useState(initialState);

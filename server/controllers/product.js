@@ -23,7 +23,7 @@ exports.listAll = async (req, res) => {
         .sort([["createdAt", "desc"]])
         .exec();
     res.json(products);
-}
+};
 
 exports.remove = async (req, res) => {
     try {
@@ -35,5 +35,13 @@ exports.remove = async (req, res) => {
         console.log(err);
         return res.status(400).send("Product Deleted Failed");
     }
+};
+
+exports.read = async (req, res) => {
+    let product = await Product.findOne({ slug: req.params.slug })
+        .populate("category")
+        .sort([["createdAt", "desc"]])
+        .exec();
+    res.json(product);
 };
 
