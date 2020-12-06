@@ -30,17 +30,19 @@ const AllProducts = () => {
                 <div className="col-md-2">
                     <AdminNav />
                 </div>
-                {loading ? (
-                    <h4 className="text-danger">Carregando...</h4>
-                ) : (
-                    <h4>Todos os produtos</h4>
-                )}
                 <div className="col">
-                    { products.map((product) => (
-                        <div key={product._id} className="col-md-4">
-                            <AdminProductCard product={product} />
-                        </div>
-                    ))}
+                    {loading ? (
+                        <h4 className="text-danger">Carregando...</h4>
+                    ) : (
+                        <h4>Todos os produtos</h4>
+                    )}
+                    <div className="row">
+                        { products.map((product) => (
+                            <div key={product._id} className="col-md-4 pb-3">
+                                <AdminProductCard product={product} />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
