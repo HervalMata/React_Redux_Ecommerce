@@ -37,7 +37,8 @@ const ProductCreateForm = ({ handleSubmit, handleChange, handleCategoryChange, s
                 <select
                     name="shipping"
                     className="form-control"
-                    value={title} onChange={handleChange}
+                    value={shipping === "Sim" ? "Sim" : "Não"}
+                    onChange={handleChange}
                 >
                     <option>Por favor selecione</option>
                     <option value="No">Não</option>
