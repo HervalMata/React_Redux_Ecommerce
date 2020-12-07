@@ -4,6 +4,8 @@ import AdminNav from "../../../components/nav/AdminNav";
 import {getProduct} from "../../../functions/product";
 import ProductUpdateForm from "../../../components/forms/ProductUpdateForm";
 import {getCategories} from "../../../functions/category";
+import {LoadingOutlined} from "@ant-design/icons";
+import FileUpload from "../../../components/forms/FileUpload";
 
 
 const initialState = {
@@ -23,6 +25,7 @@ const ProductUpdate = ({ match }) => {
     const [values, setValues] = useState(initialState);
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [loading, setLoading] = useState(false);
     const { user } = useSelector((state) => ({ ...state }));
     const { slug } = match.params;
 
@@ -67,8 +70,18 @@ const ProductUpdate = ({ match }) => {
                     <AdminNav />
                 </div>
                 <div className="col-md-10">
-                    <h4>Atualizar Produto</h4>
-                    {JSON.stringify(values)}
+                    {loading ? (
+                        <LoadingOutlined className="text-danger h1" />
+                    ) : (
+                        <h4>Atualizar Produto</h4>
+                    )}
+                    {/*{JSON.stringify(values)}*/}
+                    <div className="p-3">
+                        <FileUpload
+                            setValues={setValues}
+                            setLoading={setLoading}
+                            values={values} />
+                    </div>
                     <ProductUpdateForm
                         handleSubmit={handleSubmit}
                         handleChange={handleChange}
