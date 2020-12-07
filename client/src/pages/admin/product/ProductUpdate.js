@@ -22,6 +22,7 @@ const initialState = {
 const ProductUpdate = ({ match }) => {
     const [values, setValues] = useState(initialState);
     const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState("");
     const { user } = useSelector((state) => ({ ...state }));
     const { slug } = match.params;
 
@@ -53,6 +54,10 @@ const ProductUpdate = ({ match }) => {
         e.preventDefault();
         console.log("CATEGORIA CLICADA", e.target.value);
         setValues({ ...values, category: e.target.value });
+        setSelectedCategory(e.target.value);
+        if (values.category._id === e.target.value){
+            loadProduct();
+        }
     };
 
     return (
@@ -69,6 +74,7 @@ const ProductUpdate = ({ match }) => {
                         handleChange={handleChange}
                         handleCategoryChange={handleCategoryChange}
                         categories={categories}
+                        selectedCaegory={selectedCategory}
                         values={setValues}
                         setValues={setValues} />
                     <hr />
