@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
 import AdminNav from "../../../components/nav/AdminNav";
-import {getProduct} from "../../../functions/product";
+import {getProduct, updateProduct} from "../../../functions/product";
 import ProductUpdateForm from "../../../components/forms/ProductUpdateForm";
 import {getCategories} from "../../../functions/category";
 import {LoadingOutlined} from "@ant-design/icons";
 import FileUpload from "../../../components/forms/FileUpload";
+import {toast} from "react-toastify";
 
 
 const initialState = {
@@ -47,6 +48,19 @@ const ProductUpdate = ({ match }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setLoading(true);
+        values.category = selectedCategory ? selectedCategory : values.category;
+        updateProduct(slug, values, user.token)
+            .then((res) => {
+                setLoading(false);
+                toast.success(`"${res.data.title}" está atualizado`);
+                history.push("/admin/products");
+            })
+            .catch((err) => {
+                console.log(err);
+                setLoading(false);
+                toast.error(err.response.data.err);
+            });
     };
 
     const handleChange = (e) => {
