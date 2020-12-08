@@ -13,7 +13,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
             setLoading(true);
             for (let i = 0; i < files.length; i++) {
                 Resizer.imageFileResizer(
-                    files[1], 720, 720, "JPEG",
+                    files[i], 720, 720, "JPEG",
                     100, 0, (uri) => {
                         console.log(uri);
                         axios.post(`${process.env.REACT_APP_API}/uploadimages`,
@@ -76,7 +76,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
                 ))}
             </div>
             <div className="row">
-                <label className="btn btn-primary">
+                <label className="btn btn-primary btn-raised mt-3">
                     Escolher Foto
                 <input
                     type="file" multiple hidden

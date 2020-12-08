@@ -38,10 +38,29 @@ exports.remove = async (req, res) => {
 };
 
 exports.read = async (req, res) => {
-    let product = await Product.findOne({ slug: req.params.slug })
+    const product = await Product.findOne({ slug: req.params.slug })
         .populate("category")
-        .sort([["createdAt", "desc"]])
         .exec();
     res.json(product);
 };
 
+exports.update = async (req, res) => {
+    try {
+        if (req.body.title) {
+            req.body.slug = slugify(req.body.title);
+        }
+        console.log(req.body);
+        const updated = await Product.findOneAndUpdate(
+            { slug: req.params.slug},
+                  req.body,
+            { new: true }
+            ).exec();
+        res.json(updated);
+    } catch (err) {
+        console.log(err);
+        //res.status(400).send("Update Product Failed");
+        res.status(400).json({
+            err: err.message
+        });
+    }
+};

@@ -1,8 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {Card} from "antd";
 import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
 const { Meta } = Card;
-import { Link } from 'react-router-dom';
 
 const AdminProductCard = ({ product, handleRemove }) => {
     const { title, description, images, slug } = product;

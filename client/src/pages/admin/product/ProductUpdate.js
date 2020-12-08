@@ -8,6 +8,36 @@ import {LoadingOutlined} from "@ant-design/icons";
 import FileUpload from "../../../components/forms/FileUpload";
 import {toast} from "react-toastify";
 
+const Colors = {
+    Brown : {
+        id: "Brown",
+        name: "Brown",
+    },
+    Red: {
+        id: "Red",
+        name: "Red",
+    },
+    Blue: {
+        id: "Blue",
+        name: "Blue",
+    },
+    Green: {
+        id: "Green",
+        name: "Green",
+    },
+    White: {
+        id: "White",
+        name: "White",
+    },
+    Pink: {
+        id: "Pink",
+        name: "Pink",
+    },
+    Yellow: {
+        id: "Yellow",
+        name: "Yellow",
+    },
+};
 
 const initialState = {
     title: "",
@@ -18,14 +48,16 @@ const initialState = {
     shipping: "",
     quantity: "",
     images: [],
-    colors: ["Brown", "Red", "Blue", "Green", "White", "Pink", "Yellow"],
     color: "",
+    // colors: ["Brown", "Red", "Blue", "Green", "White", "Pink", "Yellow"],
+
 };
 
-const ProductUpdate = ({ match }) => {
+const ProductUpdate = ({ match, history }) => {
     const [values, setValues] = useState(initialState);
+    const [colors, setColors] = useState(Colors);
     const [categories, setCategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState([]);
     const [loading, setLoading] = useState(false);
     const { user } = useSelector((state) => ({ ...state }));
     const { slug } = match.params;
@@ -37,7 +69,10 @@ const ProductUpdate = ({ match }) => {
 
     const loadProduct = () => {
         getProduct(slug).then((p) => {
+            console.log(p);
+            //values.title = p.data.title;
           setValues({ ...values, ...p.data });
+          console.log(values);
         });
     };
 
@@ -102,7 +137,8 @@ const ProductUpdate = ({ match }) => {
                         handleCategoryChange={handleCategoryChange}
                         categories={categories}
                         selectedCaegory={selectedCategory}
-                        values={setValues}
+                        values={values}
+                        colors={colors}
                         setValues={setValues} />
                     <hr />
                 </div>
