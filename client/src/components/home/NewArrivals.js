@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {getProducts} from "../../functions/product";
+import {getProducts, getProductsCount} from "../../functions/product";
 import LoadingCard from "../cards/LoadingCard";
 import ProductCard from "../cards/ProductCard";
 import {Pagination} from "antd";
@@ -13,6 +13,10 @@ const NewArrivals = () => {
     useEffect(() => {
         loadAllProducts();
     }, [page]);
+
+    useEffect(() => {
+        getProductsCount().then((res) => setProductsCount(res.data));
+    }, []);
 
     const loadAllProducts = () => {
         setLoading(true);
