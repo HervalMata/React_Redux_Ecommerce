@@ -19,7 +19,11 @@ const Product = ({ match }) => {
                 <SingleProduct product={product} />
             </div>
             <div className="row">
-                <div>Produtos Relacionados</div>
+                <div className="col text-center pt-5 pb-5">
+                    <hr />
+                    <h4>Produtos Relacionados</h4>
+                    <hr />
+                </div>
             </div>
         </div>
     );

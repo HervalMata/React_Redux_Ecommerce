@@ -1,14 +1,16 @@
 import React from "react";
-import {Card} from "antd";
+import {Card, Tabs} from "antd";
 import {HeartOutlined, ShoppingCartOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ProductListItems from "./ProductListItems";
 
+const { TabPane } = Tabs;
+
 
 const SingleProduct = ({ product }) => {
-    const { title, images } = product;
+    const { title, images, description } = product;
 
     return (
         <>
@@ -16,6 +18,14 @@ const SingleProduct = ({ product }) => {
                 <Carousel showArrows={true} autoplay infiniteLoop>
                     {images && images.map((i) => <img src={i.url} key={i.public_id} /> )}
                 </Carousel>
+                <Tabs type="card">
+                    <TabPane tab="Descrição" key="1">
+                        {description && description}
+                    </TabPane>
+                    <TabPane tab="Mais" key="2">
+                        Ligue para (xx) xxxxx-xxxx para saber mais sobre este produto.
+                    </TabPane>
+                </Tabs>
             </div>
             <div className="col-md-5">
                 <h1 className="bg-info p-3">{title}</h1>
