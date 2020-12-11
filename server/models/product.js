@@ -47,6 +47,12 @@ const productSchema = new mongoose.Schema({
         type: String,
         enum: ["Brown", "Red", "Blue", "Green", "White", "Pink", "Yellow"],
     },
+    ratings: [
+        {
+            star: Number,
+            postedBy: { type: ObjectId, ref: "User" },
+        },
+    ],
 }, { timestamps: true });
 
 module.exports = mongoose.model("Product", productSchema);
