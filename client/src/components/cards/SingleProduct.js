@@ -4,11 +4,11 @@ import {HeartOutlined, ShoppingCartOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import ProductListItems from "./ProductListItems";
 
-const { Meta } = Card;
 
 const SingleProduct = ({ product }) => {
-    const { title, description, images, slug } = product;
+    const { title, images } = product;
 
     return (
         <>
@@ -18,6 +18,7 @@ const SingleProduct = ({ product }) => {
                 </Carousel>
             </div>
             <div className="col-md-5">
+                <h1 className="bg-info p-3">{title}</h1>
                 <Card actions={[
                     <>
                         <ShoppingCartOutlined className="text-success" />
@@ -31,10 +32,7 @@ const SingleProduct = ({ product }) => {
                     </Link>,
                 ]}
                 >
-                    <Meta title={title} description={description} />
-                    <p>
-                        price/category/shipping/color/quantity available/sold
-                    </p>
+                    <ProductListItems product={product} />
                 </Card>
             </div>
         </>
