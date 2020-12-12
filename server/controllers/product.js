@@ -124,7 +124,7 @@ exports.listRelated = async (req, res) => {
     })
         .limit(3)
         .populate("category")
-        .postedBy("postedBy")
+        .populate("postedBy")
         .exec();
     res.json(related);
 };
