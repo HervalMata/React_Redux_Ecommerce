@@ -33,7 +33,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
             <div className="col-md-5">
                 <h1 className="bg-info p-3">{title}</h1>
                 {product && product.ratings && product.ratings.length > 0
-                 ? showAverage(product) : "Nenhuma avaliação ainda"}
+                 ? (showAverage(product)) : (<div className="text-center pt-1 pb-3"> "Nenhuma avaliação ainda"</div>)}
                 <Card actions={[
                     <>
                         <ShoppingCartOutlined className="text-success" />
