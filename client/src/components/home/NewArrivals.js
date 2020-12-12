@@ -33,23 +33,25 @@ const NewArrivals = () => {
                     <LoadingCard count={3} />
                 ) : (
                     <div className="row">
-                        {products.map((product) => (
-                            <div key={product._id} className="col-md-4">
-                                <ProductCard product={product} />
+                        {products.map((p) => (
+                            <div key={p._id} className="col-md-4">
+                                <ProductCard product={p} />
                             </div>
                         ))}
                     </div>
                 )}
             </div>
-            <div className="row">
-                <nav className="col-md-4 offset-md-4 text-danger pt-5 p-3">
-                    <Pagination
-                        current={page}
-                        total={(productsCount / 3)}
-                        onChange={(value) => setPage(value)}
-                    />
-                </nav>
-            </div>
+            { productsCount > 3 ?
+                <div className="row">
+                    <nav className="col-md-4 offset-md-4 text-danger pt-5 p-3">
+                        <Pagination
+                            current={page}
+                            total={(productsCount / 3)}
+                            onChange={(value) => setPage(value)}
+                        />
+                    </nav>
+                </div>
+            : ""}
         </>
     )
 }
