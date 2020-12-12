@@ -15,7 +15,7 @@ const CategoryList = () => {
         });
     }, []);
 
-    const showCategories = () => {
+    const showCategories = () =>
         categories.map((c) => (
             //console.log(cat._id),
             <div
@@ -26,7 +26,6 @@ const CategoryList = () => {
                     </Link>
             </div>
         ));
-    };
 
     return (
         <div className="container">
