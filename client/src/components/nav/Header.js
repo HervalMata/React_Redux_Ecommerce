@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import {Menu} from "antd";
-import {AppstoreAddOutlined, LogoutOutlined, SettingOutlined, UserAddOutlined, UserOutlined} from "@ant-design/icons";
+import {
+    AppstoreAddOutlined,
+    LogoutOutlined,
+    SettingOutlined,
+    ShoppingOutlined,
+    UserAddOutlined,
+    UserOutlined
+} from "@ant-design/icons";
 import { useDispatch, useSelector } from 'react-redux';
 import {Link, useHistory} from 'react-router-dom';
 import firebase from "firebase";
@@ -31,6 +38,10 @@ const Header = () => {
         <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
             <Item key="home" icon={<AppstoreAddOutlined />}>
                 <Link to="/">Home</Link>
+            </Item>
+
+            <Item key="shop" icon={<ShoppingOutlined />}>
+                <Link to="/shop">Loja</Link>
             </Item>
 
             {!user && (
