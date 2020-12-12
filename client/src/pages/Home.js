@@ -2,6 +2,7 @@ import React from 'react';
 import Jumbotron from "../components/cards/Jumbotron";
 import NewArrivals from "../components/home/NewArrivals";
 import BestSellers from "../components/home/BestSellers";
+import CategoryList from "../components/category/CategoryList";
 
 const Home = () => {
 
@@ -21,8 +22,13 @@ const Home = () => {
             </h4>
             <BestSellers />
 
-            <br/>
-            <br/>
+            <h4 className="text-danger p-3 mt-5 mb-5 display-4 jumbotron">
+                Categorias
+            </h4>
+            <CategoryList />
+
+            <br />
+            <br />
         </>
     );
 };
