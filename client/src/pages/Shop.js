@@ -4,6 +4,7 @@ import ProductCard from "../components/cards/ProductCard";
 import {useDispatch, useSelector} from "react-redux";
 import {Checkbox, Menu, Slider} from "antd";
 import {DollarOutlined, DownSquareOutlined} from "@ant-design/icons";
+import {getCategories} from "../functions/category";
 
 const { SubMenu } = Menu;
 
@@ -22,6 +23,7 @@ const Shop = () => {
 
     useEffect(() => {
         loadAllProducts();
+        getCategories().then((res) => setCategories(res.data));
     }, []);
 
     const loadAllProducts = () => {
