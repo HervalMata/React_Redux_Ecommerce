@@ -1,6 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
+import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
 
 const Cart = () => {
     const { cart, user } = useSelector((state) => ({ ...state }));
@@ -16,6 +17,25 @@ const Cart = () => {
 
     };
 
+    const showCartItems = () => (
+        <table className="table table-bordered">
+            <thead className="thead-light">
+                <tr>
+                    <th scope="col">Imagem</th>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Cor</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Entrega</th>
+                    <th scope="col">Remover</th>
+                </tr>
+            </thead>
+            {cart.map((p) => (
+                <ProductCardInCheckout key={p._id} p={p} />
+            ))}
+        </table>
+    );
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -27,7 +47,7 @@ const Cart = () => {
                             Nemhum produtos no carrinho. <Link to="/shop">Continue comprando.</Link>
                         </p>
                     ) : (
-                        "mostrar itens do carrinho"
+                        showCartItems()
                     )}
                 </div>
                 <div className="col-md-4">
