@@ -12,6 +12,10 @@ const Cart = () => {
         }, 0);
     };
 
+    const saverderToDb = () => {
+
+    };
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -41,16 +45,25 @@ const Cart = () => {
                     Total: <b>R${getTotal()},00</b>
                     <hr />
                     {user ? (
-                        <button className="btn btn-sm btn-primary mt-2">
+                        <button
+                            onClick={saverderToDb}
+                            className="btn btn-sm btn-primary mt-2"
+                            disabled={!cart.length}
+                        >
                             Ir para Pagamento
                         </button>
                     ) : (
                         <button className="btn btn-sm btn-primary mt-2">
-                            Login para Pagamento
+                            <Link to={{
+                                pathname: "/login",
+                                state: { from: "cart" },
+                            }}
+                            >
+                                Login para Pagamento
+                            </Link>
                         </button>
                     )}
                 </div>
-                <h4>Carrinho</h4>
             </div>
         </div>
     );
