@@ -3,10 +3,25 @@ import {Card} from "antd";
 import {Link} from "react-router-dom";
 import {EyeOutlined, ShoppingCartOutlined} from "@ant-design/icons";
 import {showAverage} from "../../functions/rating";
+import _ from "lodash";
 
 const { Meta } = Card;
 
 const ProductCard = ({ product }) => {
+    const handleAddToCart = () => {
+        let cart = [];
+        if (typeof window !== "undefined") {
+            if (localStorage.getItem("cart")) {
+                cart = JSON.parse(localStorage.getItem("cart"));
+            }
+            cart.push({
+                ...product, count: 1
+            });
+            let unique = _.uniqWith(cart, _.isEqual);
+            localStorage.setItem("cart", JSON.stringify(unique));
+        }
+    };
+
     const { images, title, description, slug } = product;
 
     return (
