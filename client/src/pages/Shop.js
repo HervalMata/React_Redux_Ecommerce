@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {fetchProductsByFilter, getProductsByCount} from "../functions/product";
 import ProductCard from "../components/cards/ProductCard";
 import {useDispatch, useSelector} from "react-redux";
-import {Checkbox, Menu, Slider} from "antd";
+import {Checkbox, Menu, Radio, Slider} from "antd";
 import {DollarOutlined, DownSquareOutlined, StarOutlined} from "@ant-design/icons";
 import {getCategories} from "../functions/category";
 import Star from "../components/forms/Star";
@@ -17,6 +17,11 @@ const Shop = () => {
     const [categories, setCategories] = useState([]);
     const [categoryIds, setCategoryIds] = useState([]);
     const [star, setStar] = useState("");
+    const [colors, setColors] = useState([
+        "red", "Green", "Blue", "Pink", "Yellow"
+    ]);
+    const [color, setColor] = useState("");
+    const [shipping, setShipping] = useState("");
 
     let dispatch = useDispatch();
 
@@ -75,6 +80,9 @@ const Shop = () => {
             payload: { text: "" },
         });
         setPrice([0, 0]);
+        setStar("")
+        setColor("");
+        setShipping("");
         let inTheState = [...categoryIds];
         let justChecked = e.target.value;
         let foundInTheState = inTheState.indexOf(justChecked);
@@ -95,6 +103,8 @@ const Shop = () => {
         setCategoryIds([]);
         setPrice(value);
         setStar("");
+        setColor("");
+        setShipping("");
         setTimeout(() => {
             setOk(!ok);
         }, 300);
@@ -108,6 +118,8 @@ const Shop = () => {
         setCategoryIds([]);
         setPrice([0, 0]);
         setStar(num);
+        setColor("");
+        setShipping("");
         fetchProducts({ stars: num });
     };
 
@@ -121,6 +133,64 @@ const Shop = () => {
         </div>
     );
 
+    const showColors = () =>
+        colors.map((c) => (
+            <Radio
+                value={c} name={c} checked={c === color}
+                onChange={handleColor} className="pb-1 pl-4 pr-4"
+            >
+                {c}
+            </Radio>
+        ));
+
+    const handleColor = (e) => {
+        dispatch({
+            type: "SEARCH_QUERY",
+            payload: { text: "" },
+        });
+        setCategoryIds([]);
+        setPrice([0, 0]);
+        setStar("");
+        setColor(e.target.value);
+        setShipping("");
+        fetchProducts({ color: e.target.value });
+    };
+
+    const showShipping = () => (
+        <>
+            <Checkbox
+                onChange={handleShippingChange}
+                className="pb-2 pl-4 pr-4"
+                value="Yes"
+                checked={shipping === "Yes"}
+            >
+                Sim
+            </Checkbox>
+
+            <Checkbox
+                onChange={handleShippingChange}
+                className="pb-2 pl-4 pr-4"
+                value="No"
+                checked={shipping === "No"}
+            >
+                Não
+            </Checkbox>
+        </>
+    );
+
+    const handleShippingChange = (e) => {
+        dispatch({
+            type: "SEARCH_QUERY",
+            payload: { text: "" },
+        });
+        setCategoryIds([]);
+        setPrice([0, 0]);
+        setStar("");
+        setColor("");
+        setShipping(e.target.value);
+        fetchProducts({ shipping: e.target.value });
+    };
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -128,10 +198,10 @@ const Shop = () => {
                     <h4>Filtros</h4>
                     <hr />
 
-                    <Menu defaultOpenKeys={["1", "2"]} mode="inline">
+                    <Menu defaultOpenKeys={["1", "2", "3", "4", "5"]} mode="inline">
                         <SubMenu key="1" title={
                             <span className="h6">
-                                R <DollarOutlined /> Preço
+                                R<DollarOutlined />Preço
                             </span>
                         } >
                             <div>
@@ -139,7 +209,7 @@ const Shop = () => {
                                     className="ml-4 mr-4"
                                     tipFormatter={(v) => `R$${v}`}
                                     range value={price}
-                                    onChange={handleSlider} max="4999"
+                                    onChange={handleSlider} max="100"
                                 />
                             </div>
                         </SubMenu>
@@ -161,6 +231,26 @@ const Shop = () => {
                         } >
                             <div style={{ margin: "-10px" }}>
                                 {showStars()}
+                            </div>
+                        </SubMenu>
+
+                        <SubMenu key="4" title={
+                            <span className="h6">
+                                <DownSquareOutlined /> Cores
+                            </span>
+                        } >
+                            <div style={{ margin: "-10px" }} className="pr-5">
+                                {showColors()}
+                            </div>
+                        </SubMenu>
+
+                        <SubMenu key="5" title={
+                            <span className="h6">
+                                <DownSquareOutlined /> Entrega
+                            </span>
+                        } >
+                            <div style={{ margin: "-10px" }} className="pr-5">
+                                {showShipping()}
                             </div>
                         </SubMenu>
                     </Menu>
