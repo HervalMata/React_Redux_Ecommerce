@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import {Menu} from "antd";
+import {Badge, Menu} from "antd";
 import {
     AppstoreAddOutlined,
     LogoutOutlined,
-    SettingOutlined,
+    SettingOutlined, ShoppingCartOutlined,
     ShoppingOutlined,
     UserAddOutlined,
     UserOutlined
@@ -18,7 +18,7 @@ const Header = () => {
     const [current, setCurrent] = useState("home");
 
     let dispatch = useDispatch();
-    let { user } = useSelector((state) => ({...state}));
+    let { user, cart } = useSelector((state) => ({...state}));
     let history = useHistory();
 
     const handleClick = (e) => {
@@ -42,6 +42,14 @@ const Header = () => {
 
             <Item key="shop" icon={<ShoppingOutlined />}>
                 <Link to="/shop">Loja</Link>
+            </Item>
+
+            <Item key="cart" icon={<ShoppingCartOutlined />}>
+                <Link to="/cart">
+                    <Badge count={cart.length} offset={[9, 0]}>
+                        Carrinho
+                    </Badge>
+                </Link>
             </Item>
 
             {!user && (

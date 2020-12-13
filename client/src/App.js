@@ -25,6 +25,7 @@ import ProductUpdate from "./pages/admin/product/ProductUpdate";
 import Product from "./pages/Product";
 import CategoryHome from "./pages/category/CategoryHome";
 import Shop from "./pages/Shop";
+import Cart from "./pages/Cart";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -74,6 +75,7 @@ const App = () => {
                 <Route exact path="/product/:slug" component={Product} />
                 <Route exact path="/category/:slug" component={CategoryHome} />
                 <Route exact path="/shop" component={Shop} />
+                <Route exact path="/cart" component={Cart} />
             </Switch>
         </>
     );
