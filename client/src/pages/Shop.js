@@ -3,8 +3,9 @@ import {fetchProductsByFilter, getProductsByCount} from "../functions/product";
 import ProductCard from "../components/cards/ProductCard";
 import {useDispatch, useSelector} from "react-redux";
 import {Checkbox, Menu, Slider} from "antd";
-import {DollarOutlined, DownSquareOutlined} from "@ant-design/icons";
+import {DollarOutlined, DownSquareOutlined, StarOutlined} from "@ant-design/icons";
 import {getCategories} from "../functions/category";
+import Star from "../components/forms/Star";
 
 const { SubMenu } = Menu;
 
@@ -15,6 +16,7 @@ const Shop = () => {
     const [ok, setOk] = useState(false);
     const [categories, setCategories] = useState([]);
     const [categoryIds, setCategoryIds] = useState([]);
+    const [star, setStar] = useState("");
 
     let dispatch = useDispatch();
 
@@ -90,11 +92,34 @@ const Shop = () => {
             type: "SEARCH_QUERY",
             payload: { text: "" },
         });
+        setCategoryIds([]);
         setPrice(value);
+        setStar("");
         setTimeout(() => {
             setOk(!ok);
         }, 300);
     };
+
+    const handleStarClick = (num) => {
+        dispatch({
+            type: "SEARCH_QUERY",
+            payload: { text: "" },
+        });
+        setCategoryIds([]);
+        setPrice([0, 0]);
+        setStar(num);
+        fetchProducts({ stars: num });
+    };
+
+    const showStars = () => (
+        <div className="pr-4 pl-4 pb-2">
+            <Star starClick={handleStarClick} numberOfStars={5} />
+            <Star starClick={handleStarClick} numberOfStars={4} />
+            <Star starClick={handleStarClick} numberOfStars={3} />
+            <Star starClick={handleStarClick} numberOfStars={2} />
+            <Star starClick={handleStarClick} numberOfStars={1} />
+        </div>
+    );
 
     return (
         <div className="container-fluid">
@@ -126,6 +151,16 @@ const Shop = () => {
                         } >
                             <div style={{ margin: "-10px" }}>
                                 {showCategories()}
+                            </div>
+                        </SubMenu>
+
+                        <SubMenu key="3" title={
+                            <span className="h6">
+                                <StarOutlined /> Avaliações
+                            </span>
+                        } >
+                            <div style={{ margin: "-10px" }}>
+                                {showStars()}
                             </div>
                         </SubMenu>
                     </Menu>
