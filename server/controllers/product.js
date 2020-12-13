@@ -195,8 +195,24 @@ const handleStar = async (req, res, stars) => {
         });
 };
 
+const handleShipping = async (req, res, shipping) => {
+    const products = await Product.find({ shipping })
+        .populate("category", "_id name")
+        .populate("postedBy", "_id name")
+        .exec();
+    res.json(products);
+};
+
+const handleColor = async (req, res, color) => {
+    const products = await Product.find({ color })
+        .populate("category", "_id name")
+        .populate("postedBy", "_id name")
+        .exec();
+    res.json(products);
+};
+
 exports.searchFilters = async (req, res) => {
-    const { query, price, category, stars } = req.body;
+    const { query, price, category, stars, shipping, color } = req.body;
 
     if (query) {
         console.log("query ---->", query);
@@ -216,5 +232,15 @@ exports.searchFilters = async (req, res) => {
     if (stars) {
         console.log("stars ---->", stars);
         await handleStar(req, res, stars);
+    }
+
+    if (shipping) {
+        console.log("shipping ---->", shipping);
+        await handleShipping(req, res, shipping);
+    }
+
+    if (color) {
+        console.log("color ---->", color);
+        await handleColor(req, res, color);
     }
 };
