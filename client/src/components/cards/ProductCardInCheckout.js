@@ -2,6 +2,7 @@ import React from 'react';
 import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
 import ModalImage from 'react-modal-image';
+import {CheckCircleOutlined, CloseCircleOutlined, CloseOutlined} from "@ant-design/icons";
 
 const ProductCardInCheckout = ({ p }) => {
     let dispatch = useDispatch();
@@ -28,22 +29,46 @@ const ProductCardInCheckout = ({ p }) => {
                 }
             });
 
-            localStorage.setItem("cart", JSON.stringify(unique));
+            localStorage.setItem("cart", JSON.stringify(cart));
 
             dispatch({
                 type: "ADD_TO_CART",
                 payload: cart,
             });
         }
-    }
+    };
+
+    const handleRemove = () => {
+        let cart = [];
+
+        if (typeof window !== "undefined") {
+
+            if (localStorage.getItem("cart")) {
+                cart = JSON.parse(localStorage.getItem("cart"));
+            }
+
+            cart.map((product, i) => {
+                if (product._id === p._id) {
+                    cart.splice(i, 1);
+                }
+            });
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            dispatch({
+                type: "ADD_TO_CART",
+                payload: cart,
+            });
+        }
+    };
 
     return (
         <tbody>
             <tr>
                 <td>
-                    <div style={{ width: "100px", height: "auto" }}>
+                    <div style={{ width: "50px", height: "auto" }}>
                         {p.images.length ? (
-                            <ModalImage sm           all={p.images[0].url}
+                            <ModalImage small={p.images[0].url}
                                         large={p.images[0].url}
                             />
                         ) : (
@@ -60,8 +85,19 @@ const ProductCardInCheckout = ({ p }) => {
                         value={p.count} onChange={handleQuantityChange}
                     />
                 </td>
-                <td>Shipping Icon</td>
-                <td>Delete Icon</td>
+                <td className="text-center">
+                    {p.shipping === "Yes" ? (
+                        <CheckCircleOutlined className="text-success" />
+                    ) : (
+                        <CloseCircleOutlined className="text-danger" />
+                    )}
+                </td>
+                <td className="text-center">
+                    <CloseOutlined
+                        onClick={handleRemove}
+                        className="text-danger pointer"
+                    />
+                </td>
             </tr>
         </tbody>
     );
