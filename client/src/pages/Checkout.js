@@ -10,6 +10,7 @@ const Checkout = () => {
     const [total, setTotal] = useState(0);
     const [address, setAddress] = useState("");
     const [addressSaved, setAddressSaved] = useState(false);
+    const [coupon, setCoupon] = useState("");
 
     const dispatch = useDispatch();
     const { user } = useSelector((state) => ({ ...state }));
@@ -48,25 +49,52 @@ const Checkout = () => {
         });
     };
 
+    const applyDiscountCoupon = () => {
+        console.log("send coupon to backend");
+    };
+    
+    const showAddress = () => (
+        <>
+            <ReactQuill theme="snow" value={address} onChange={setAddress} />
+            <button className="btn btn-primary mt-2" onClick={saveAddressToDb} >
+                Salvar
+            </button>
+        </>
+    );
+    
+    const showProductSummary = () => 
+        products.map((p, i) => (
+            <div key={i}>
+                <p>
+                    {p.product.title} ({p.color}) x {p.count} = {" "}
+                    {p.product.price * p.count}
+                </p>
+            </div>
+        ));
+    
+    const showApplyCoupon = () => (
+        <>
+            <input 
+                onChange={(e) => setCoupon(e.target.value)}
+                value={coupon} type="text" className="form-control"
+            />
+            <button onClick={applyDiscountCoupon} className="btn btn-primary mt-2">
+                Aplicar Cupom
+            </button>
+        </>
+    );
+
     return (
         <div className="row">
             <div className="col-md-6">
                 <h4>Endereço de Entrega</h4>
                 <br />
                 <br />
-                <ReactQuill
-                    theme="snow" value={address}
-                    onChange={setAddress}
-                />
-                <button
-                    className="btn btn-primary mt-2"
-                    onClick={saveAddressToDb}>
-                    Salvar
-                </button>
+                {showAddress()}
                 <hr />
                 <h4>Tem Cupom?</h4>
                 <br />
-                Aplicar Cupom
+                {showApplyCoupon()}
             </div>
 
             <div className="col-md-6">
@@ -74,14 +102,7 @@ const Checkout = () => {
                 <hr />
                 <p>Produtos {products.length}</p>
                 <hr />
-                {products.map((p, i) => (
-                    <div key={i}>
-                        <p>
-                            {p.product.title} ({p.color}) x {p.count} = {" "}
-                            {p.product.price * p.count}
-                        </p>
-                    </div>
-                ))}
+                {showProductSummary()}
                 <hr />
                 <p>Total do carrinho: R$ {total},00</p>
 
