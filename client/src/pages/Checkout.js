@@ -87,7 +87,10 @@ const Checkout = () => {
     const showApplyCoupon = () => (
         <>
             <input 
-                onChange={(e) => setCoupon(e.target.value)}
+                onChange={(e) => {
+                    setCoupon(e.target.value);
+                    setDiscountError("");
+                }}
                 value={coupon} type="text" className="form-control"
             />
             <button onClick={applyDiscountCoupon} className="btn btn-primary mt-2">
@@ -107,6 +110,8 @@ const Checkout = () => {
                 <h4>Tem Cupom?</h4>
                 <br />
                 {showApplyCoupon()}
+                <br />
+                {discountError && <p className="bg-danger p-2">{discountError}</p>}
             </div>
 
             <div className="col-md-6">
@@ -117,6 +122,12 @@ const Checkout = () => {
                 {showProductSummary()}
                 <hr />
                 <p>Total do carrinho: R$ {total},00</p>
+
+                {totalAfterDiscount > 0 && (
+                    <p className="bg-success p-2">
+                        Desconto aplicado: Total Para Pagamento: R$ {totalAfterDiscount},00
+                    </p>
+                )}
 
                 <div className="row">
                     <div className="col-md-6">
