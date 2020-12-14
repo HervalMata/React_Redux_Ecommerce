@@ -4,11 +4,12 @@ const router = express.Router();
 
 const { authCheck } = require("../middlewares/auth");
 
-const { userCart, getUserCart, emptyUserCart, saveAddress } = require("../controllers/user");
+const { userCart, getUserCart, emptyUserCart, saveAddress, applyCouponToUserCart } = require("../controllers/user");
 
 router.post("/user/cart", authCheck, userCart);
 router.get("/user/cart", authCheck, getUserCart);
 router.delete("/user/cart", authCheck, emptyUserCart);
 router.post("/user/address", authCheck, saveAddress);
+router.post("/user/cart/coupon", authCheck, applyCouponToUserCart);
 
 module.exports = router;
