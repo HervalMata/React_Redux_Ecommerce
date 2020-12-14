@@ -38,6 +38,8 @@ const Checkout = () => {
         emptyUserCart(user.token).then((res) => {
             setProducts([]);
             setTotal(0);
+            setTotalAfterDiscount("");
+            setCoupon("");
             toast.success("Carrinho está vazio. Continue comprando.");
         });
     };
@@ -57,10 +59,18 @@ const Checkout = () => {
             console.log("RES ON COUPON APPLIED", res.data);
             if (res.data) {
                 setTotalAfterDiscount(res.data);
+                dispatch({
+                    type: "COUPON_APPLIED",
+                    payload: true,
+                });
             }
 
             if (res.data.err) {
                 setDiscountError(res.data.err);
+                dispatch({
+                    type: "COUPON_APPLIED",
+                    payload: false,
+                });
             }
         });
     };
@@ -134,6 +144,7 @@ const Checkout = () => {
                         <button
                             disabled={!addressSaved || !products.length}
                             className="btn btn-primary"
+                            onClick={() => history.push("/payment")}
                         >
                             Finaliza Compra
                         </button>
