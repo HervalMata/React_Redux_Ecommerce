@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {getUserCart} from "../functions/user";
+import {emptyUserCart, getUserCart} from "../functions/user";
+import {toast} from "react-toastify";
 
 const Checkout = () => {
     const [products, setProducts] = useState([]);
@@ -15,6 +16,23 @@ const Checkout = () => {
            setTotal(res.data.cartTotal);
        });
     }, []);
+
+    const emptyCart = () => {
+        if (typeof window !== "undefined") {
+            localStorage.removeItem("cart");
+        }
+
+        dispatch({
+            type: "ADD_TO_CART",
+            payload: [],
+        });
+
+        emptyUserCart(user.token).then((res) => {
+            setProducts([]);
+            setTotal(0);
+            toast.success("Carrinho está vazio. Continue comprando.");
+        });
+    };
 
     const saveAddressToDb = () => {
 
@@ -60,7 +78,13 @@ const Checkout = () => {
                     </div>
 
                     <div className="col-md-6">
-                        <button className="btn btn-primary">Esvaziar carrinho</button>
+                        <button
+                            disabled={!products.length}
+                            onClick={emptyCart}
+                            className="btn btn-primary"
+                        >
+                            Esvaziar carrinho
+                        </button>
                     </div>
                 </div>
             </div>
