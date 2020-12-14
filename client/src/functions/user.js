@@ -9,7 +9,7 @@ export const userCart = async (cart, authtoken) =>
                 authtoken,
             },
         }
-    )
+    );
 
 export const getUserCart = async (authtoken) =>
     await axios.get(
@@ -19,7 +19,7 @@ export const getUserCart = async (authtoken) =>
                 authtoken,
             },
         }
-    )
+    );
 
 export const emptyUserCart = async (authtoken) =>
     await axios.delete(
@@ -29,7 +29,7 @@ export const emptyUserCart = async (authtoken) =>
                 authtoken,
             },
         }
-    )
+    );
 
 export const saveUserAddress = async (address, authtoken) =>
     await axios.post(
@@ -40,4 +40,15 @@ export const saveUserAddress = async (address, authtoken) =>
                 authtoken,
             },
         }
-    )
+    );
+
+export const applyCoupon = async (coupon, authtoken) =>
+    await axios.post(
+        `${process.env.REACT_APP_API}/user/cart/coupon`,
+        { coupon },
+        {
+            headers: {
+                authtoken,
+            },
+        }
+    );
