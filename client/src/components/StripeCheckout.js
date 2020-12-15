@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {CardElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import {createPaymentIntent} from "../functions/stripe";
+import {Link} from "react-router-dom";
 
 const StripeCheckout = ({ history }) => {
     const dispatch = useDispatch();
@@ -24,11 +25,31 @@ const StripeCheckout = ({ history }) => {
     }, []);
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
+        setProcessing(true);
+        const payload = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: elements.getElement(cardElement),
+                billing_details: {
+                    name: e.target.value,
+                },
+            },
+        });
 
+        if (payload.error) {
+            setError(`Payment failed ${payload.error.message}`);
+            setProcessing(false);
+        } else {
+            console.log(JSON.stringify(payload, null, 4));
+            setError(null);
+            setProcessing(false);
+            setSucceeded(true);
+        }
     };
 
     const handleChange = async (e) => {
-
+        setDisabled(e.empty);
+        setError(e.error ? e.error.message : "");
     };
 
     const cartStyle = {
@@ -50,6 +71,12 @@ const StripeCheckout = ({ history }) => {
 
     return (
         <>
+            <p className={succeeded ? "result-message" : "result-message hidden"}>
+                Pagamento realizado com sucesso.{" "}
+                <Link to="/user/history">
+                    Veja seu histórico de compras.
+                </Link>
+            </p>
             <form id="payment-form" className="stripe-form" onSubmit={handleSubmit}>
                 <CardElement
                     id="card-element" options={cartStyle} onChange={handleChange}
@@ -59,6 +86,12 @@ const StripeCheckout = ({ history }) => {
                         {processing ? <div className="spinner" id="spinner"></div> : "Pagar" }
                     </span>
                 </button>
+                <br />
+                {error && (
+                    <div className="card-error" role="alert">
+                        {error}
+                    </div>
+                )}
             </form>
         </>
     );
