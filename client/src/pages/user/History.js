@@ -17,14 +17,32 @@ const History = () => {
             setOrders(res.data);
         });
 
+    const showOrderInTable = (order) => <p>Cada ordem e seus produtos</p>;
+
+    const showEachOrders = () =>
+        orders.map((order, i) => (
+            <div key={i} className="m-5 p-3 card">
+                <p>Mostrar Infornação do Pagamento</p>
+                {showOrderInTable(order)}
+                <div className="row">
+                    <div className="col">
+                        <p>Download em PDF</p>
+                    </div>
+                </div>
+            </div>
+        ));
+
     return (
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-2">
                     <UserNav/>
                 </div>
-                <div className="col">
-                    User History Page
+                <div className="col text-center">
+                    <h4>
+                        {orders.length > 0 ? "Ordens dos Usuários" : "Nenhuma ordem para este usuário"}
+                    </h4>
+                    {showEachOrders()}
                 </div>
             </div>
         </div>
