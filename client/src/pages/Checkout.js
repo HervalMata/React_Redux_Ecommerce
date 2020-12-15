@@ -5,7 +5,7 @@ import {toast} from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const Checkout = () => {
+const Checkout = ({ history }) => {
     const [products, setProducts] = useState([]);
     const [total, setTotal] = useState(0);
     const [address, setAddress] = useState("");
@@ -45,7 +45,7 @@ const Checkout = () => {
     };
 
     const saveAddressToDb = () => {
-        saveUserAddress(user.token, address).then((res) => {
+        saveUserAddress(address, user.token).then((res) => {
             if (res.data.ok) {
                 setAddressSaved(true);
                 toast.success("Address saved");
@@ -55,7 +55,7 @@ const Checkout = () => {
 
     const applyDiscountCoupon = () => {
         console.log("send coupon to backend");
-        applyCoupon(user.token, coupon).then((res) => {
+        applyCoupon(coupon, user.token).then((res) => {
             console.log("RES ON COUPON APPLIED", res.data);
             if (res.data) {
                 setTotalAfterDiscount(res.data);

@@ -83,8 +83,7 @@ exports.applyCouponToUserCart = async (req, res) => {
 
     const user = await User.findOne({ email: req.user.email }).exec();
 
-    let { products, cartTotal } = await
-        ( await Cart.findOne({ orderBy: user._id }))
+    let { products, cartTotal } = await Cart.findOne({ orderBy: user._id })
             .populate("products.product", "_id title price").exec();
 
     console.log("cartTotal", cartTotal, "discount%", validCoupon.discount);
