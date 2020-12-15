@@ -3,7 +3,7 @@ import AdminNav from "../../../components/nav/AdminNav";
 import {useSelector} from "react-redux";
 import {createCoupon, getCoupons, removeCoupon} from "../../../functions/coupon";
 import {toast} from "react-toastify";
-import {DatePicker} from "antd";
+import DatePicker from "react-datepicker";
 import {DeleteOutlined} from "@ant-design/icons";
 
 const CreateCouponPage = () => {

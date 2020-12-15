@@ -23,10 +23,10 @@ exports.userCart = async (req, res) => {
         object.product = cart[i]._id;
         object.count = cart[i].count;
         object.color = cart[i].color;
-        let { price } = await Product
+        let productFromDb = await Product
             .findById(cart[i]._id)
             .select("price").exec();
-        object.price = price;
+        object.price = productFromDb.price;
 
         products.push(object);
     }

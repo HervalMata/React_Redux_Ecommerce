@@ -5,6 +5,7 @@ import "../stripe.css";
 import StripeCheckout from "../components/StripeCheckout";
 
 const promise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
+console.log(promise);
 
 const Payment = () => {
     return (
