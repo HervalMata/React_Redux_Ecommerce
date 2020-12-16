@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import UserNav from "../../components/nav/UserNav";
 import {useSelector} from "react-redux";
 import {getUserOrders} from "../../functions/user";
+import {CheckCircleOutlined} from "@ant-design/icons";
 
 const History = () => {
     const [orders, setOrders] = useState([]);
@@ -17,7 +18,39 @@ const History = () => {
             setOrders(res.data);
         });
 
-    const showOrderInTable = (order) => <p>Cada ordem e seus produtos</p>;
+    const showOrderInTable = (order) => (
+        <table className="table table-bordered">
+            <thead className="thead-light">
+                <tr>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Cor</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Entrega</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {order.products.map((p, i) => (
+                <tr key={i}>
+                    <td>
+                        <b>{p.product.title}</b>
+                    </td>
+                    <td>R$ {p.product.price},00</td>
+                    <td>{p.color}</td>
+                    <td>{p.count}</td>
+                    <td>
+                        {p.product.shipping === "Yes" ? (
+                            <CheckCircleOutlined style={{ color: "green" }} />
+                        ) : (
+                            <CheckCircleOutlined style={{ color: "red" }} />
+                        )}
+                    </td>
+                </tr>
+            ))}
+            </tbody>
+        </table>
+    );
 
     const showEachOrders = () =>
         orders.map((order, i) => (
