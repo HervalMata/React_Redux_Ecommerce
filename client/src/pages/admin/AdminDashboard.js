@@ -3,6 +3,7 @@ import AdminNav from "../../components/nav/AdminNav";
 import {changeStatus, getOrders} from "../../functions/admin";
 import {toast} from "react-toastify";
 import {useSelector} from "react-redux";
+import Orders from "../../components/order/Orders";
 
 const AdminDashboard = () => {
 
@@ -35,7 +36,7 @@ const AdminDashboard = () => {
                 </div>
                 <div className="col">
                     <h4>Admin Dashboard</h4>
-                    {JSON.stringify(orders)}
+                    <Orders orders={orders} handleStatusChange={handleStatusChange()} />
                 </div>
             </div>
         </div>
