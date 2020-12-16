@@ -1,5 +1,6 @@
 import React from 'react';
 import { Document, Page, Text, StyleSheet } from "@react-pdf/renderer";
+import {DataTableCell, Table, TableBody, TableCell, TableHeader} from "@david.kucsai/react-pdf-table";
 
 const Invoice = ({ order }) => (
     <Document>
@@ -10,6 +11,50 @@ const Invoice = ({ order }) => (
             <Text style={styles.title}>Order Invoice</Text>
             <Text style={styles.author}>Herval Mata</Text>
             <Text style={styles.subtitle}>Order Summary</Text>
+
+            <Table>
+                <TableHeader>
+                    <TableCell>Titulo</TableCell>
+                    <TableCell>Preço</TableCell>
+                    <TableCell>Quantidade</TableCell>
+                    <TableCell>Cor</TableCell>
+                </TableHeader>
+            </Table>
+
+            <Table data={order.products}>
+                <TableBody>
+                    <DataTableCell getContent={(x) => x.product.title} />
+                    <DataTableCell getContent={(x) => `R$ ${x.product.price},00`} />
+                    <DataTableCell getContent={(x) => x.product.count} />
+                    <DataTableCell getContent={(x) => x.product.color} />
+                </TableBody>
+            </Table>
+
+            <Text style={styles.text}>
+                <Text>
+                    Data: {"          "}
+                        {new Date(order.paymentIntent.created * 1000).toLocaleString()}
+                </Text>
+                {"\n"}
+                <Text>
+                    Ordem Nº: {"        "}
+                    {order.paymentIntent.id}
+                </Text>
+                {"\n"}
+                <Text>
+                    Ordem Status: {"    "}
+                    {order.orderStatus}
+                </Text>
+                {"\n"}
+                <Text>
+                    Total Pago: {"        "}
+                    {order.paymentIntent.amount}
+                </Text>
+            </Text>
+
+            <text style={styles.footer}>
+                ~ Obrigado a você por comprar conosco. ~
+            </text>
         </Page>
     </Document>
 );
