@@ -4,6 +4,7 @@ import {useSelector} from "react-redux";
 import {getUserOrders} from "../../functions/user";
 import {CheckCircleOutlined} from "@ant-design/icons";
 import ShowPaymentInfo from "../../components/cards/ShowPaymentInfo";
+import { PDFDownloadLink, Document, Page, Text, View, PDFViewer, Stylesheet } from "@react-pdf/renderer";
 
 const History = () => {
     const [orders, setOrders] = useState([]);
@@ -51,6 +52,25 @@ const History = () => {
             ))}
             </tbody>
         </table>
+    );
+
+    const showDownloadLink = (order) => (
+        <PDFDownloadLink
+            document={
+                <Document>
+                    <Page size="A4">
+                        <View>
+                            <Text>Section #1</Text>
+                            <Text>Section #2</Text>
+                        </View>
+                    </Page>
+                </Document>
+            }
+            fileName="invoice-pdf"
+            className="btn btn-sm btn-block btn-outline-primary"
+        >
+            Download PDF
+        </PDFDownloadLink>
     );
 
     const showEachOrders = () =>
